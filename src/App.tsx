@@ -14,6 +14,7 @@ import Input from "@/components/Input";
 import Badge from "@/components/Badge";
 import Dashboard from "@/pages/Dashboard";
 import AIExplainer from "@/pages/AIExplainer";
+import AdaptiveExercise from "@/pages/AdaptiveExercise";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -221,6 +222,21 @@ function App() {
   );
 }
 
+if (user && page === "explainer") {
+  return (
+    <AIExplainer
+      onBack={() => setPage("dashboard")}
+    />
+  );
+}
+
+if (user && page === "exercise") {
+  return (
+    <AdaptiveExercise
+      onBack={() => setPage("dashboard")}
+    />
+  );
+}
   if (user && user.role === "DOSEN" && page === "lecturer") {
     return (
       <main className="min-h-screen bg-brand-50 p-6">
@@ -1149,7 +1165,9 @@ function App() {
           </button>
         </p>
       </div>
-      {/* Footer */}
+
+      <div className="fixed bottom-4 center-4 text-gray-500 text-sm">
+        {/* Footer */}
       <footer className="mt-8 bg-white rounded-2xl shadow-lg p-5 text-center">
         <p className="text-sm text-gray-600">© 2026 VisualMath AI</p>
 
@@ -1158,6 +1176,7 @@ function App() {
           interaktif.
         </p>
       </footer>
+      </div>
     </main>
   );
 }

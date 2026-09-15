@@ -6,11 +6,15 @@ import Card from "@/components/Card";
 import Input from "@/components/Input";
 import Badge from "@/components/Badge";
 
-export default function AIExplainer() {
+type AIExplainerProps = {
+  onBack: () => void;
+};
+
+export default function AIExplainer({ onBack }: AIExplainerProps) {
   const [formula, setFormula] = useState("");
-  const [topic, setTopic] = useState<
-    "linear" | "quadratic" | "trigonometry"
-  >("linear");
+  const [topic, setTopic] = useState<"linear" | "quadratic" | "trigonometry">(
+    "linear",
+  );
 
   const [analysis, setAnalysis] = useState<null | {
     formulaId: string;
@@ -30,17 +34,26 @@ export default function AIExplainer() {
 
     setError("");
     setAnalysis(null);
-    setLoading(true);
 
     try {
       const input = {
-        formula,
+        formula: formula.trim(),
         topic,
       };
 
-      FormulaSchema.parse(input);
+      const validation = FormulaSchema.safeParse(input);
 
-      const result = await analyzeFormulaApi(input);
+      if (!validation.success) {
+        const firstError =
+          validation.error.issues[0]?.message || "Input rumus tidak valid.";
+
+        setError(firstError);
+        return;
+      }
+
+      setLoading(true);
+
+      const result = await analyzeFormulaApi(validation.data);
 
       setAnalysis(result);
     } catch (err) {
@@ -57,6 +70,13 @@ export default function AIExplainer() {
   return (
     <main className="min-h-screen bg-brand-50 p-6">
       <div className="max-w-4xl mx-auto">
+        <button
+          type="button"
+          onClick={onBack}
+          className="mb-4 px-4 py-2 rounded-lg bg-white shadow text-gray-700 font-semibold hover:bg-gray-100 transition"
+        >
+          ← Kembali ke Dashboard
+        </button>
 
         <Card className="mb-6">
           <h1 className="text-3xl font-bold text-brand-700">
@@ -64,19 +84,24 @@ export default function AIExplainer() {
           </h1>
 
           <p className="text-gray-600 mt-2">
-            Masukkan rumus matematika untuk mendapatkan penjelasan
-            langkah demi langkah.
+            Masukkan rumus matematika untuk mendapatkan penjelasan langkah demi
+            langkah.
           </p>
         </Card>
 
         <Card>
           <form onSubmit={handleAnalyze} className="space-y-5">
-
             <Input
               label="Rumus Matematika"
               value={formula}
-              onChange={(event) => setFormula(event.target.value)}
+              onChange={(event) => {
+                setFormula(event.target.value);
+                if (error) {
+                  setError("");
+                }
+              }}
               placeholder="Contoh: y = 3x + 5"
+              aria-invalid={Boolean(error)}
             />
 
             <div className="space-y-2">
@@ -91,7 +116,7 @@ export default function AIExplainer() {
                     event.target.value as
                       | "linear"
                       | "quadratic"
-                      | "trigonometry"
+                      | "trigonometry",
                   )
                 }
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
@@ -105,12 +130,16 @@ export default function AIExplainer() {
             <Button type="submit" disabled={loading}>
               {loading ? "Menganalisis..." : "Analisis Rumus"}
             </Button>
-
           </form>
 
           {error && (
-            <div className="mt-5 rounded-lg bg-red-50 border border-red-200 p-4 text-red-700">
-              {error}
+            <div
+              role="alert"
+              className="mt-5 rounded-lg bg-red-50 border border-red-200 p-4 text-red-700"
+            >
+              <p className="font-semibold">⚠️ Validasi gagal</p>
+
+              <p className="text-sm mt-1">{error}</p>
             </div>
           )}
         </Card>
@@ -127,8 +156,8 @@ export default function AIExplainer() {
                   analysis.difficulty === "HIGH"
                     ? "warning"
                     : analysis.difficulty === "LOW"
-                    ? "success"
-                    : "default"
+                      ? "success"
+                      : "default"
                 }
               >
                 {analysis.difficulty}
@@ -136,11 +165,8 @@ export default function AIExplainer() {
             </div>
 
             <div className="space-y-5">
-
               <div>
-                <p className="text-sm text-gray-500">
-                  Rumus
-                </p>
+                <p className="text-sm text-gray-500">Rumus</p>
 
                 <p className="text-lg font-semibold text-gray-800">
                   {analysis.formula}
@@ -148,13 +174,9 @@ export default function AIExplainer() {
               </div>
 
               <div>
-                <p className="text-sm text-gray-500">
-                  Penjelasan
-                </p>
+                <p className="text-sm text-gray-500">Penjelasan</p>
 
-                <p className="text-gray-700 mt-1">
-                  {analysis.explanation}
-                </p>
+                <p className="text-gray-700 mt-1">{analysis.explanation}</p>
               </div>
 
               <div>
@@ -168,11 +190,9 @@ export default function AIExplainer() {
                   ))}
                 </ol>
               </div>
-
             </div>
           </Card>
         )}
-
       </div>
     </main>
   );
