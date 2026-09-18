@@ -16,7 +16,10 @@ export default function DashboardLayout({
             VisualMath AI
           </Link>
 
-          <nav className="flex items-center gap-5 text-sm">
+          <nav
+            aria-label="Navigasi mahasiswa"
+            className="flex flex-wrap items-center gap-4 text-sm"
+          >
             <Link
               href="/dashboard"
               className="text-slate-600 hover:text-blue-600"
@@ -43,6 +46,13 @@ export default function DashboardLayout({
               className="text-slate-600 hover:text-blue-600"
             >
               Progres
+            </Link>
+
+            <Link
+              href="/dashboard/profile"
+              className="text-slate-600 hover:text-blue-600"
+            >
+              Profil
             </Link>
 
             <Link

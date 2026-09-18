@@ -1,59 +1,101 @@
-import { NextResponse } from "next/server";
-import { LoginSchema } from "@/schemas/authSchema";
+import { NextRequest, NextResponse } from "next/server";
+import {
+  LoginSchema,
+} from "@/schemas/authSchema";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body: unknown = await request.json();
 
     const validation = LoginSchema.safeParse(body);
 
     if (!validation.success) {
       return NextResponse.json(
         {
-          success: false,
-          message: "Email dan password tidak valid.",
+          message:
+            "Data login tidak valid.",
+          errors: validation.error.flatten(),
         },
-        { status: 400 }
+        {
+          status: 400,
+        },
       );
     }
 
-    const { email, password } = validation.data;
+    const {
+      email,
+      password,
+      role,
+    } = validation.data;
 
-    // Demo authentication
     if (
-      email !== "mahasiswa@visualmath.ai" ||
-      password !== "12345678"
+      email !== "mahasiswa@visualmath.ai" &&
+      email !== "dosen@visualmath.ai" &&
+      email !== "admin@visualmath.ai"
     ) {
       return NextResponse.json(
         {
-          success: false,
-          message: "Email atau password salah.",
+          message:
+            "Email demo tidak terdaftar.",
         },
-        { status: 401 }
+        {
+          status: 401,
+        },
+      );
+    }
+
+    if (password !== "12345678") {
+      return NextResponse.json(
+        {
+          message:
+            "Password demo tidak valid.",
+        },
+        {
+          status: 401,
+        },
       );
     }
 
     const response = NextResponse.json({
-      success: true,
       message: "Login berhasil.",
+      role,
     });
 
-    response.cookies.set("visualmath_session", "authenticated", {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24,
-    });
+    response.cookies.set(
+      "visualmath_session",
+      "authenticated",
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        secure:
+          process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 24,
+      },
+    );
+
+    response.cookies.set(
+      "visualmath_role",
+      role,
+      {
+        httpOnly: true,
+        sameSite: "lax",
+        secure:
+          process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 24,
+      },
+    );
 
     return response;
   } catch {
     return NextResponse.json(
       {
-        success: false,
-        message: "Terjadi kesalahan pada server.",
+        message: "Request tidak valid.",
       },
-      { status: 500 }
+      {
+        status: 400,
+      },
     );
   }
 }
