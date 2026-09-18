@@ -1,6 +1,3 @@
-
----
-
 ## `SRS_UI_Component_Mapping.md`
 
 ```md
