@@ -5,6 +5,7 @@
 VisualMath AI menggunakan Next.js App Router.
 
 Secara umum:
+``text
 Server Components
         │
         ├── Page
