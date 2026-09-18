@@ -19,10 +19,7 @@ export const LoginSchema = z.object({
 });
 
 export const RegisterSchema = LoginSchema.extend({
-  name: z
-    .string()
-    .min(3, "Nama minimal 3 karakter")
-    .max(80, "Nama maksimal 80 karakter"),
+  name: z.string().min(3, "Nama minimal 3 karakter").max(80, "Nama maksimal 80 karakter"),
 });
 
 export type LoginInput = z.infer<typeof LoginSchema>;

@@ -2,23 +2,11 @@ type DashboardProps = {
   userName: string;
   userRole: string;
   onNavigate: (
-    page:
-      | "dashboard"
-      | "explainer"
-      | "graph"
-      | "exercise"
-      | "progress"
-      | "lecturer"
-      | "admin",
+    page: "dashboard" | "explainer" | "graph" | "exercise" | "progress" | "lecturer" | "admin",
   ) => void;
   onLogout: () => void;
 };
-export default function Dashboard({
-  userName,
-  userRole,
-  onNavigate,
-  onLogout,
-}: DashboardProps) {
+export default function Dashboard({ userName, userRole, onNavigate, onLogout }: DashboardProps) {
   return (
     <main className="min-h-screen bg-brand-50 p-6">
       <div className="max-w-6xl mx-auto">
@@ -26,21 +14,15 @@ export default function Dashboard({
         <header className="bg-white rounded-2xl shadow-lg p-5 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-brand-700">
-                VisualMath AI
-              </h1>
+              <h1 className="text-3xl font-bold text-brand-700">VisualMath AI</h1>
 
-              <p className="text-gray-600 mt-1">
-                Selamat datang, {userName} 👋
-              </p>
+              <p className="text-gray-600 mt-1">Selamat datang, {userName} 👋</p>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="px-3 py-2 rounded-lg bg-gray-50">
                 <p className="text-xs text-gray-500">Role</p>
-                <p className="text-sm font-semibold text-gray-700">
-                  {userRole}
-                </p>
+                <p className="text-sm font-semibold text-gray-700">{userRole}</p>
               </div>
 
               <button
@@ -63,9 +45,7 @@ export default function Dashboard({
           >
             <div className="text-4xl mb-4">👨‍🏫</div>
 
-            <h2 className="text-xl font-bold text-brand-700">
-              Dashboard Dosen
-            </h2>
+            <h2 className="text-xl font-bold text-brand-700">Dashboard Dosen</h2>
 
             <p className="text-gray-600 mt-2">
               Kelola materi, latihan soal, dan monitoring mahasiswa.
@@ -82,9 +62,7 @@ export default function Dashboard({
           >
             <div className="text-4xl mb-4">⚙️</div>
 
-            <h2 className="text-xl font-bold text-brand-700">
-              Dashboard Admin
-            </h2>
+            <h2 className="text-xl font-bold text-brand-700">Dashboard Admin</h2>
 
             <p className="text-gray-600 mt-2">
               Kelola pengguna, materi, monitoring sistem, dan laporan.
@@ -105,13 +83,10 @@ export default function Dashboard({
             >
               <div className="text-4xl mb-4">🤖</div>
 
-              <h3 className="text-xl font-bold text-brand-700">
-                AI Math Explainer
-              </h3>
+              <h3 className="text-xl font-bold text-brand-700">AI Math Explainer</h3>
 
               <p className="text-gray-600 mt-2">
-                Masukkan rumus matematika dan dapatkan penjelasan langkah demi
-                langkah dari AI.
+                Masukkan rumus matematika dan dapatkan penjelasan langkah demi langkah dari AI.
               </p>
             </button>
 
@@ -123,13 +98,10 @@ export default function Dashboard({
             >
               <div className="text-4xl mb-4">📈</div>
 
-              <h3 className="text-xl font-bold text-brand-700">
-                Grafik Interaktif
-              </h3>
+              <h3 className="text-xl font-bold text-brand-700">Grafik Interaktif</h3>
 
               <p className="text-gray-600 mt-2">
-                Lihat visualisasi data matematika dalam bentuk grafik
-                interaktif.
+                Lihat visualisasi data matematika dalam bentuk grafik interaktif.
               </p>
             </button>
 
@@ -141,13 +113,10 @@ export default function Dashboard({
             >
               <div className="text-4xl mb-4">📝</div>
 
-              <h3 className="text-xl font-bold text-brand-700">
-                Latihan Adaptif
-              </h3>
+              <h3 className="text-xl font-bold text-brand-700">Latihan Adaptif</h3>
 
               <p className="text-gray-600 mt-2">
-                Kerjakan latihan matematika dengan tingkat kesulitan yang
-                menyesuaikan kemampuan.
+                Kerjakan latihan matematika dengan tingkat kesulitan yang menyesuaikan kemampuan.
               </p>
             </button>
 
@@ -159,13 +128,10 @@ export default function Dashboard({
             >
               <div className="text-4xl mb-4">📊</div>
 
-              <h3 className="text-xl font-bold text-brand-700">
-                Progres Belajar
-              </h3>
+              <h3 className="text-xl font-bold text-brand-700">Progres Belajar</h3>
 
               <p className="text-gray-600 mt-2">
-                Pantau perkembangan belajar dan tingkat penguasaan materi
-                matematika.
+                Pantau perkembangan belajar dan tingkat penguasaan materi matematika.
               </p>
             </button>
           </div>
@@ -176,8 +142,7 @@ export default function Dashboard({
           <p className="text-sm text-gray-600">© 2026 VisualMath AI</p>
 
           <p className="text-xs text-gray-500 mt-1">
-            Platform pembelajaran matematika berbasis AI dan visualisasi
-            interaktif.
+            Platform pembelajaran matematika berbasis AI dan visualisasi interaktif.
           </p>
         </footer>
       </div>

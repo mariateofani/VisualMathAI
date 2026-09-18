@@ -7,7 +7,6 @@ import { useExercisesQuery } from "../../hooks/useExercisesQuery";
 
 export default function ExerciseClient() {
   const exercisesQuery = useExercisesQuery();
-  const { data: exercises } = useExercisesQuery();
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [usedExerciseIds, setUsedExerciseIds] = useState<string[]>([]);
   const [answer, setAnswer] = useState("");

@@ -1,11 +1,8 @@
 import { z } from "zod";
 
-export const TopicEnum = z.enum(
-  ["linear", "quadratic", "trigonometry"],
-  {
-    message: "Topik tidak valid",
-  }
-);
+export const TopicEnum = z.enum(["linear", "quadratic", "trigonometry"], {
+  message: "Topik tidak valid",
+});
 
 export const DifficultyEnum = z.enum(["LOW", "MEDIUM", "HIGH"]);
 
@@ -16,7 +13,7 @@ export const FormulaSchema = z.object({
     .max(200, "Rumus maksimal 200 karakter")
     .regex(
       /^[a-zA-Z0-9\s+\-*/^().=,]+$/,
-      "Format rumus tidak valid (hanya karakter matematika standar)"
+      "Format rumus tidak valid (hanya karakter matematika standar)",
     ),
   topic: TopicEnum,
 });

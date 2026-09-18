@@ -5,10 +5,7 @@ type BadgeProps = {
   variant?: "default" | "success" | "warning";
 };
 
-export default function Badge({
-  children,
-  variant = "default",
-}: BadgeProps) {
+export default function Badge({ children, variant = "default" }: BadgeProps) {
   const variants = {
     default: "bg-gray-100 text-gray-700",
     success: "bg-green-100 text-green-700",

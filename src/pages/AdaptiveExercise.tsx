@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { fetchExercisesApi, submitAnswerApi } from "@/services/api";
+import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Input from "@/components/Input";
-import Badge from "@/components/Badge";
+import { fetchExercisesApi, submitAnswerApi } from "@/services/api";
 
 type Exercise = {
   id: string;
@@ -45,8 +45,15 @@ export default function AdaptiveExercise({ onBack }: AdaptiveExerciseProps) {
         return;
       }
 
-      setExercise(exercises[0]);
-      setUsedExerciseIds([exercises[0].id]);
+      const firstExercise = exercises[0];
+
+      if (!firstExercise) {
+        setError("Belum ada soal latihan.");
+        return;
+      }
+
+      setExercise(firstExercise);
+      setUsedExerciseIds([firstExercise.id]);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);

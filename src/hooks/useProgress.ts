@@ -1,8 +1,6 @@
 import { useState } from "react";
-
-import { fetchProgressApi } from "@/services/api";
-
 import type { Progress } from "@/schemas/progressSchema";
+import { fetchProgressApi } from "@/services/api";
 
 export function useProgress() {
   const [progress, setProgress] = useState<Progress[]>([]);

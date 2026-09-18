@@ -1,35 +1,31 @@
 import { useState } from "react";
-import {
-  loginApi,
-  analyzeFormulaApi,
-  fetchExercisesApi,
-  fetchProgressApi,
-  submitAnswerApi,
-} from "@/services/api";
-import { LoginSchema } from "@/schemas/authSchema";
-import { FormulaSchema } from "@/schemas/formulaSchema";
+import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Input from "@/components/Input";
-import Badge from "@/components/Badge";
-import Dashboard from "@/pages/Dashboard";
-import AIExplainer from "@/pages/AIExplainer";
 import AdaptiveExercise from "@/pages/AdaptiveExercise";
+import AIExplainer from "@/pages/AIExplainer";
+import Dashboard from "@/pages/Dashboard";
+import { LoginSchema } from "@/schemas/authSchema";
+import { FormulaSchema } from "@/schemas/formulaSchema";
+import {
+  analyzeFormulaApi,
+  fetchExercisesApi,
+  fetchProgressApi,
+  loginApi,
+  submitAnswerApi,
+} from "@/services/api";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"MAHASISWA" | "DOSEN" | "ADMIN">(
-    "MAHASISWA",
-  );
+  const [role, setRole] = useState<"MAHASISWA" | "DOSEN" | "ADMIN">("MAHASISWA");
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [formula, setFormula] = useState("");
-  const [topic, setTopic] = useState<"linear" | "quadratic" | "trigonometry">(
-    "linear",
-  );
+  const [topic, setTopic] = useState<"linear" | "quadratic" | "trigonometry">("linear");
 
   const [analysis, setAnalysis] = useState<null | {
     formulaId: string;
@@ -51,13 +47,7 @@ function App() {
   }>(null);
 
   const [page, setPage] = useState<
-    | "dashboard"
-    | "explainer"
-    | "graph"
-    | "exercise"
-    | "progress"
-    | "lecturer"
-    | "admin"
+    "dashboard" | "explainer" | "graph" | "exercise" | "progress" | "lecturer" | "admin"
   >("dashboard");
 
   const [currentExercise, setCurrentExercise] = useState<any>(null);
@@ -177,13 +167,9 @@ function App() {
       const result = await submitAnswerApi(currentExercise.id, answer);
 
       if (result.isCorrect) {
-        setExerciseMessage(
-          `🎉 Jawaban benar! Tingkat berikutnya: ${result.nextDifficulty}`,
-        );
+        setExerciseMessage(`🎉 Jawaban benar! Tingkat berikutnya: ${result.nextDifficulty}`);
       } else {
-        setExerciseMessage(
-          `❌ Jawaban belum tepat. Tingkat berikutnya: ${result.nextDifficulty}`,
-        );
+        setExerciseMessage(`❌ Jawaban belum tepat. Tingkat berikutnya: ${result.nextDifficulty}`);
       }
 
       setAnswer("");
@@ -212,31 +198,23 @@ function App() {
   }
 
   if (user && page === "dashboard") {
-  return (
-    <Dashboard
-      userName={user.name}
-      userRole={user.role}
-      onNavigate={setPage}
-      onLogout={() => setUser(null)}
-    />
-  );
-}
+    return (
+      <Dashboard
+        userName={user.name}
+        userRole={user.role}
+        onNavigate={setPage}
+        onLogout={() => setUser(null)}
+      />
+    );
+  }
 
-if (user && page === "explainer") {
-  return (
-    <AIExplainer
-      onBack={() => setPage("dashboard")}
-    />
-  );
-}
+  if (user && page === "explainer") {
+    return <AIExplainer onBack={() => setPage("dashboard")} />;
+  }
 
-if (user && page === "exercise") {
-  return (
-    <AdaptiveExercise
-      onBack={() => setPage("dashboard")}
-    />
-  );
-}
+  if (user && page === "exercise") {
+    return <AdaptiveExercise onBack={() => setPage("dashboard")} />;
+  }
   if (user && user.role === "DOSEN" && page === "lecturer") {
     return (
       <main className="min-h-screen bg-brand-50 p-6">
@@ -245,12 +223,8 @@ if (user && page === "exercise") {
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  Dashboard Dosen
-                </h1>
-                <p className="mt-1 text-gray-600">
-                  Selamat datang, {user.name} 👋
-                </p>
+                <h1 className="text-3xl font-bold text-brand-700">Dashboard Dosen</h1>
+                <p className="mt-1 text-gray-600">Selamat datang, {user.name} 👋</p>
               </div>
 
               <button
@@ -266,39 +240,27 @@ if (user && page === "exercise") {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="text-4xl mb-4">📚</div>
-              <h2 className="text-xl font-bold text-gray-800">
-                Materi Pembelajaran
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800">Materi Pembelajaran</h2>
               <p className="mt-2 text-gray-600">
                 Kelola dan siapkan materi matematika untuk mahasiswa.
               </p>
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data materi (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data materi (demo)</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="text-4xl mb-4">📝</div>
               <h2 className="text-xl font-bold text-gray-800">Latihan Soal</h2>
-              <p className="mt-2 text-gray-600">
-                Membuat dan mengelola latihan matematika.
-              </p>
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data latihan (demo)
-              </p>
+              <p className="mt-2 text-gray-600">Membuat dan mengelola latihan matematika.</p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data latihan (demo)</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="text-4xl mb-4">📊</div>
-              <h2 className="text-xl font-bold text-gray-800">
-                Monitoring Mahasiswa
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800">Monitoring Mahasiswa</h2>
               <p className="mt-2 text-gray-600">
                 Melihat perkembangan dan hasil belajar mahasiswa.
               </p>
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data monitoring (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data monitoring (demo)</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6">
@@ -321,13 +283,9 @@ if (user && page === "exercise") {
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  Dashboard Admin
-                </h1>
+                <h1 className="text-3xl font-bold text-brand-700">Dashboard Admin</h1>
 
-                <p className="mt-1 text-gray-600">
-                  Selamat datang, {user.name} 👋
-                </p>
+                <p className="mt-1 text-gray-600">Selamat datang, {user.name} 👋</p>
               </div>
 
               <button
@@ -345,17 +303,11 @@ if (user && page === "exercise") {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="text-4xl mb-4">👥</div>
 
-              <h2 className="text-xl font-bold text-gray-800">
-                Kelola Pengguna
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800">Kelola Pengguna</h2>
 
-              <p className="mt-2 text-gray-600">
-                Mengelola data pengguna mahasiswa dan dosen.
-              </p>
+              <p className="mt-2 text-gray-600">Mengelola data pengguna mahasiswa dan dosen.</p>
 
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data pengguna (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data pengguna (demo)</p>
             </div>
 
             {/* Kelola Materi */}
@@ -364,30 +316,22 @@ if (user && page === "exercise") {
 
               <h2 className="text-xl font-bold text-gray-800">Kelola Materi</h2>
 
-              <p className="mt-2 text-gray-600">
-                Mengelola materi pembelajaran matematika.
-              </p>
+              <p className="mt-2 text-gray-600">Mengelola materi pembelajaran matematika.</p>
 
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data materi (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data materi (demo)</p>
             </div>
 
             {/* Monitoring Sistem */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="text-4xl mb-4">📊</div>
 
-              <h2 className="text-xl font-bold text-gray-800">
-                Monitoring Sistem
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800">Monitoring Sistem</h2>
 
               <p className="mt-2 text-gray-600">
                 Melihat aktivitas dan perkembangan sistem pembelajaran.
               </p>
 
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Data monitoring (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Data monitoring (demo)</p>
             </div>
 
             {/* Laporan */}
@@ -396,13 +340,9 @@ if (user && page === "exercise") {
 
               <h2 className="text-xl font-bold text-gray-800">Laporan</h2>
 
-              <p className="mt-2 text-gray-600">
-                Melihat dan mengelola laporan sistem.
-              </p>
+              <p className="mt-2 text-gray-600">Melihat dan mengelola laporan sistem.</p>
 
-              <p className="mt-4 text-sm font-semibold text-brand-600">
-                Laporan (demo)
-              </p>
+              <p className="mt-4 text-sm font-semibold text-brand-600">Laporan (demo)</p>
             </div>
           </div>
         </div>
@@ -421,9 +361,7 @@ if (user && page === "exercise") {
             {/* Header */}
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  VisualMath AI
-                </h1>
+                <h1 className="text-3xl font-bold text-brand-700">VisualMath AI - HMR Test</h1>
 
                 <p className="text-gray-600 mt-1">AI Math Explainer</p>
               </div>
@@ -439,23 +377,17 @@ if (user && page === "exercise") {
             {/* AI Math Explainer */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-brand-700">
-                  AI Math Explainer
-                </h2>
+                <h2 className="text-2xl font-bold text-brand-700">AI Math Explainer</h2>
 
                 <p className="mt-2 text-gray-600">
-                  Masukkan rumus matematika untuk mendapatkan penjelasan dan
-                  langkah penyelesaian.
+                  Masukkan rumus matematika untuk mendapatkan penjelasan dan langkah penyelesaian.
                 </p>
               </div>
 
               <form onSubmit={handleAnalyzeFormula} className="space-y-5">
                 {/* Rumus */}
                 <div>
-                  <label
-                    htmlFor="formula"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="formula" className="block text-sm font-medium text-gray-700 mb-2">
                     Rumus
                   </label>
 
@@ -471,10 +403,7 @@ if (user && page === "exercise") {
 
                 {/* Topik */}
                 <div>
-                  <label
-                    htmlFor="topic"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-2">
                     Topik Matematika
                   </label>
 
@@ -482,12 +411,7 @@ if (user && page === "exercise") {
                     id="topic"
                     value={topic}
                     onChange={(event) =>
-                      setTopic(
-                        event.target.value as
-                          | "linear"
-                          | "quadratic"
-                          | "trigonometry",
-                      )
+                      setTopic(event.target.value as "linear" | "quadratic" | "trigonometry")
                     }
                     className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-100"
                   >
@@ -517,16 +441,12 @@ if (user && page === "exercise") {
               {/* Hasil Analisis */}
               {analysis && (
                 <div className="mt-8 border-t pt-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">
-                    Hasil Analisis
-                  </h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">Hasil Analisis</h3>
 
                   <div className="rounded-lg bg-brand-50 p-4 mb-4">
                     <p className="text-sm text-gray-500">Rumus</p>
 
-                    <p className="text-lg font-semibold text-brand-700">
-                      {analysis.formula}
-                    </p>
+                    <p className="text-lg font-semibold text-brand-700">{analysis.formula}</p>
                   </div>
 
                   <div className="rounded-lg bg-gray-50 p-4 mb-4">
@@ -547,15 +467,11 @@ if (user && page === "exercise") {
                   <div className="mb-6">
                     <h4 className="font-bold text-gray-800 mb-2">Penjelasan</h4>
 
-                    <p className="text-gray-600 leading-relaxed">
-                      {analysis.explanation}
-                    </p>
+                    <p className="text-gray-600 leading-relaxed">{analysis.explanation}</p>
                   </div>
 
                   <div>
-                    <h4 className="font-bold text-gray-800 mb-3">
-                      Langkah Penyelesaian
-                    </h4>
+                    <h4 className="font-bold text-gray-800 mb-3">Langkah Penyelesaian</h4>
 
                     <ol className="space-y-3">
                       {analysis.steps.map((step, index) => (
@@ -592,13 +508,9 @@ if (user && page === "exercise") {
             </button>
 
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h1 className="text-3xl font-bold text-brand-700">
-                📊 Progres Belajar
-              </h1>
+              <h1 className="text-3xl font-bold text-brand-700">📊 Progres Belajar</h1>
 
-              <p className="mt-2 text-gray-600">
-                Pantau perkembangan belajar matematika kamu.
-              </p>
+              <p className="mt-2 text-gray-600">Pantau perkembangan belajar matematika kamu.</p>
 
               {progressLoading ? (
                 <p className="mt-8 text-gray-600">Memuat progres...</p>
@@ -609,9 +521,7 @@ if (user && page === "exercise") {
                       <div className="flex justify-between mb-2">
                         <span className="font-semibold">{item.topicName}</span>
 
-                        <span className="font-semibold text-brand-600">
-                          {item.mastery}%
-                        </span>
+                        <span className="font-semibold text-brand-600">{item.mastery}%</span>
                       </div>
 
                       <div className="w-full bg-gray-200 rounded-full h-4">
@@ -639,9 +549,7 @@ if (user && page === "exercise") {
             {/* Header */}
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  VisualMath AI
-                </h1>
+                <h1 className="text-3xl font-bold text-brand-700">VisualMath AI</h1>
 
                 <p className="text-gray-600 mt-1">Grafik Interaktif</p>
               </div>
@@ -657,9 +565,7 @@ if (user && page === "exercise") {
             {/* Konten */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Grafik Interaktif
-                </h2>
+                <h2 className="text-2xl font-bold text-gray-800">Grafik Interaktif</h2>
 
                 <p className="mt-2 text-gray-600">
                   Visualisasi data matematika berdasarkan hasil analisis rumus.
@@ -668,9 +574,7 @@ if (user && page === "exercise") {
 
               {/* Grafik sederhana */}
               <div className="border border-gray-200 rounded-xl p-6">
-                <h3 className="font-bold text-gray-800 mb-6">
-                  Visualisasi Data
-                </h3>
+                <h3 className="font-bold text-gray-800 mb-6">Visualisasi Data</h3>
 
                 <div className="flex items-end gap-4 h-64 border-l-2 border-b-2 border-gray-300 px-6">
                   {graphValues.map((value, index) => {
@@ -683,9 +587,7 @@ if (user && page === "exercise") {
                         key={index}
                         className="flex-1 flex flex-col items-center justify-end h-full"
                       >
-                        <span className="text-sm font-semibold text-brand-700 mb-2">
-                          {value}
-                        </span>
+                        <span className="text-sm font-semibold text-brand-700 mb-2">{value}</span>
 
                         <div
                           className="w-full max-w-12 bg-brand-600 rounded-t-lg"
@@ -694,9 +596,7 @@ if (user && page === "exercise") {
                           }}
                         />
 
-                        <span className="text-xs text-gray-500 mt-2">
-                          x={index}
-                        </span>
+                        <span className="text-xs text-gray-500 mt-2">x={index}</span>
                       </div>
                     );
                   })}
@@ -733,9 +633,7 @@ if (user && page === "exercise") {
             {/* Header */}
             <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  VisualMath AI
-                </h1>
+                <h1 className="text-3xl font-bold text-brand-700">VisualMath AI</h1>
 
                 <p className="text-gray-600 mt-1">Latihan Adaptif</p>
               </div>
@@ -751,13 +649,10 @@ if (user && page === "exercise") {
             {/* Konten */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  Latihan Adaptif
-                </h2>
+                <h2 className="text-2xl font-bold text-gray-800">Latihan Adaptif</h2>
 
                 <p className="mt-2 text-gray-600">
-                  Kerjakan soal matematika dan tingkat kesulitan akan
-                  menyesuaikan kemampuanmu.
+                  Kerjakan soal matematika dan tingkat kesulitan akan menyesuaikan kemampuanmu.
                 </p>
               </div>
 
@@ -801,9 +696,7 @@ if (user && page === "exercise") {
                   <div className="rounded-xl bg-gray-50 p-6 mb-6">
                     <p className="text-sm text-gray-500 mb-2">Pertanyaan</p>
 
-                    <h3 className="text-xl font-bold text-gray-800">
-                      {currentExercise.question}
-                    </h3>
+                    <h3 className="text-xl font-bold text-gray-800">{currentExercise.question}</h3>
                   </div>
 
                   {/* Jawaban */}
@@ -841,9 +734,7 @@ if (user && page === "exercise") {
                     {exerciseLoading ? "Memeriksa..." : "Periksa Jawaban"}
                   </button>
                   {feedback && (
-                    <div className="mt-4 rounded-lg bg-brand-50 p-4 text-brand-700">
-                      {feedback}
-                    </div>
+                    <div className="mt-4 rounded-lg bg-brand-50 p-4 text-brand-700">{feedback}</div>
                   )}
                 </div>
               )}
@@ -864,13 +755,9 @@ if (user && page === "exercise") {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               {/* Logo dan identitas */}
               <div>
-                <h1 className="text-3xl font-bold text-brand-700">
-                  VisualMath AI
-                </h1>
+                <h1 className="text-3xl font-bold text-brand-700">VisualMath AI</h1>
 
-                <p className="text-gray-600 mt-1">
-                  Selamat datang, {user.name} 👋
-                </p>
+                <p className="text-gray-600 mt-1">Selamat datang, {user.name} 👋</p>
               </div>
 
               {/* Navigasi dan Logout */}
@@ -884,9 +771,7 @@ if (user && page === "exercise") {
 
                 <div className="hidden sm:block px-3 py-2 rounded-lg bg-gray-50">
                   <p className="text-xs text-gray-500">Role</p>
-                  <p className="text-sm font-semibold text-gray-700">
-                    {user.role}
-                  </p>
+                  <p className="text-sm font-semibold text-gray-700">{user.role}</p>
                 </div>
 
                 <Button variant="secondary" onClick={() => setUser(null)}>
@@ -900,9 +785,7 @@ if (user && page === "exercise") {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-800">Dashboard</h2>
 
-            <p className="text-gray-600 mt-1">
-              Pilih fitur yang ingin kamu gunakan.
-            </p>
+            <p className="text-gray-600 mt-1">Pilih fitur yang ingin kamu gunakan.</p>
           </div>
 
           {/* TOMBOL ADMIN */}
@@ -915,9 +798,7 @@ if (user && page === "exercise") {
                 <div className="text-4xl">⚙️</div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800">
-                    Dashboard Admin
-                  </h2>
+                  <h2 className="text-xl font-bold text-gray-800">Dashboard Admin</h2>
 
                   <p className="text-gray-600 mt-1">
                     Kelola pengguna, materi, monitoring, dan laporan.
@@ -937,9 +818,7 @@ if (user && page === "exercise") {
                 <div className="text-4xl">👨‍🏫</div>
 
                 <div>
-                  <h2 className="text-xl font-bold text-gray-800">
-                    Dashboard Dosen
-                  </h2>
+                  <h2 className="text-xl font-bold text-gray-800">Dashboard Dosen</h2>
 
                   <p className="text-gray-600 mt-1">
                     Kelola materi, latihan, dan monitoring mahasiswa.
@@ -953,26 +832,19 @@ if (user && page === "exercise") {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* AI Math Explainer */}
             <Card className="group text-left cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all">
-              <button
-                onClick={() => setPage("explainer")}
-                className="w-full text-left"
-              >
+              <button onClick={() => setPage("explainer")} className="w-full text-left">
                 <div className="w-14 h-14 rounded-xl bg-brand-50 flex items-center justify-center text-3xl">
                   🧠
                 </div>
 
-                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                  AI Math Explainer
-                </h3>
+                <h3 className="mt-5 text-xl font-bold text-gray-800">AI Math Explainer</h3>
 
                 <p className="mt-2 text-gray-600">
-                  Masukkan rumus matematika dan dapatkan penjelasan, langkah
-                  penyelesaian, serta tingkat kesulitan.
+                  Masukkan rumus matematika dan dapatkan penjelasan, langkah penyelesaian, serta
+                  tingkat kesulitan.
                 </p>
 
-                <p className="mt-4 font-semibold text-brand-600">
-                  Mulai Belajar →
-                </p>
+                <p className="mt-4 font-semibold text-brand-600">Mulai Belajar →</p>
               </button>
             </Card>
 
@@ -991,18 +863,14 @@ if (user && page === "exercise") {
                 </span>
               </div>
 
-              <h3 className="mt-5 text-xl font-bold text-gray-800">
-                Grafik Interaktif
-              </h3>
+              <h3 className="mt-5 text-xl font-bold text-gray-800">Grafik Interaktif</h3>
 
               <p className="mt-2 text-gray-600">
-                Visualisasikan data dan hasil matematika dalam bentuk grafik
-                yang lebih mudah dipahami.
+                Visualisasikan data dan hasil matematika dalam bentuk grafik yang lebih mudah
+                dipahami.
               </p>
 
-              <p className="mt-4 font-semibold text-brand-600">
-                Lihat Grafik →
-              </p>
+              <p className="mt-4 font-semibold text-brand-600">Lihat Grafik →</p>
             </button>
 
             {/* Latihan Adaptif */}
@@ -1026,18 +894,14 @@ if (user && page === "exercise") {
                 </span>
               </div>
 
-              <h3 className="mt-5 text-xl font-bold text-gray-800">
-                Latihan Adaptif
-              </h3>
+              <h3 className="mt-5 text-xl font-bold text-gray-800">Latihan Adaptif</h3>
 
               <p className="mt-2 text-gray-600">
-                Kerjakan soal matematika dan dapatkan latihan dengan tingkat
-                kesulitan yang menyesuaikan kemampuan.
+                Kerjakan soal matematika dan dapatkan latihan dengan tingkat kesulitan yang
+                menyesuaikan kemampuan.
               </p>
 
-              <p className="mt-4 font-semibold text-brand-600">
-                Mulai Latihan →
-              </p>
+              <p className="mt-4 font-semibold text-brand-600">Mulai Latihan →</p>
             </button>
 
             {/* Progres Belajar */}
@@ -1058,18 +922,13 @@ if (user && page === "exercise") {
                 </span>
               </div>
 
-              <h3 className="mt-5 text-xl font-bold text-gray-800">
-                Progres Belajar
-              </h3>
+              <h3 className="mt-5 text-xl font-bold text-gray-800">Progres Belajar</h3>
 
               <p className="mt-2 text-gray-600">
-                Lihat perkembangan dan tingkat penguasaan materi matematika yang
-                telah dipelajari.
+                Lihat perkembangan dan tingkat penguasaan materi matematika yang telah dipelajari.
               </p>
 
-              <p className="mt-4 font-semibold text-brand-600">
-                Lihat Progres →
-              </p>
+              <p className="mt-4 font-semibold text-brand-600">Lihat Progres →</p>
             </button>
           </div>
         </div>
@@ -1082,18 +941,13 @@ if (user && page === "exercise") {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-brand-700">VisualMath AI</h1>
 
-          <p className="mt-2 text-gray-600">
-            Masuk untuk mulai belajar matematika
-          </p>
+          <p className="mt-2 text-gray-600">Masuk untuk mulai belajar matematika</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            ></label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2"></label>
 
             <Input
               label="Email"
@@ -1124,19 +978,14 @@ if (user && page === "exercise") {
 
           {/* Role */}
           <div>
-            <label
-              htmlFor="role"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
               Role
             </label>
 
             <select
               id="role"
               value={role}
-              onChange={(event) =>
-                setRole(event.target.value as "MAHASISWA" | "DOSEN" | "ADMIN")
-              }
+              onChange={(event) => setRole(event.target.value as "MAHASISWA" | "DOSEN" | "ADMIN")}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 bg-white outline-none focus:border-brand-600 focus:ring-2 focus:ring-brand-100"
             >
               <option value="MAHASISWA">Mahasiswa</option>
@@ -1160,22 +1009,19 @@ if (user && page === "exercise") {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Belum punya akun?{" "}
-          <button className="font-semibold text-brand-600 hover:text-brand-700">
-            Daftar
-          </button>
+          <button className="font-semibold text-brand-600 hover:text-brand-700">Daftar</button>
         </p>
       </div>
 
       <div className="fixed bottom-4 center-4 text-gray-500 text-sm">
         {/* Footer */}
-      <footer className="mt-8 bg-white rounded-2xl shadow-lg p-5 text-center">
-        <p className="text-sm text-gray-600">© 2026 VisualMath AI</p>
+        <footer className="mt-8 bg-white rounded-2xl shadow-lg p-5 text-center">
+          <p className="text-sm text-gray-600">© 2026 VisualMath AI</p>
 
-        <p className="text-xs text-gray-500 mt-1">
-          Platform pembelajaran matematika berbasis AI dan visualisasi
-          interaktif.
-        </p>
-      </footer>
+          <p className="text-xs text-gray-500 mt-1">
+            Platform pembelajaran matematika berbasis AI dan visualisasi interaktif.
+          </p>
+        </footer>
       </div>
     </main>
   );

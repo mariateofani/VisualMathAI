@@ -9,9 +9,33 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+
+  server: {
+    port: 3000,
+    strictPort: true,
+    host: true,
+  },
+
+  build: {
+    target: "esnext",
+    outDir: "dist",
+    sourcemap: false,
+    minify: "oxc",
+
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
     },
   },
 });

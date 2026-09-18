@@ -1,25 +1,16 @@
+import { type LoginInput, LoginSchema } from "@/schemas/authSchema";
 import {
-  ExerciseSchema,
+  type AnswerResult,
   AnswerResultSchema,
   type Exercise,
-  type AnswerResult,
+  ExerciseSchema,
 } from "@/schemas/exerciseSchema";
-
 import {
-  ProgressListSchema,
-  type Progress,
-} from "@/schemas/progressSchema";
-
-import {
-  LoginSchema,
-  type LoginInput,
-} from "@/schemas/authSchema";
-
-import {
+  type AnalysisResponse,
   AnalysisResponseSchema,
   type FormulaInput,
-  type AnalysisResponse,
 } from "@/schemas/formulaSchema";
+import { type Progress, ProgressListSchema } from "@/schemas/progressSchema";
 
 /* ============================================================
  * SIMULASI DATABASE KLIEN
@@ -64,28 +55,26 @@ const exerciseDatabase: Exercise[] = [
   },
 
   {
-  id: "55555555-5555-4555-8555-555555555555",
-  question: "Tentukan akar-akar dari x² - 5x + 6 = 0",
-  difficulty: "HIGH",
-  options: ["2 dan 3", "1 dan 6", "-2 dan -3", "3 dan 4"],
-  correctAnswer: "2 dan 3",
-  topic: "quadratic",
-  explanation: "x² - 5x + 6 = (x - 2)(x - 3), sehingga akar-akarnya adalah 2 dan 3.",
-},
-{
-  id: "66666666-6666-4666-8666-666666666666",
-  question: "Jika f(x) = 2x² - 8x + 5, tentukan nilai minimum fungsi.",
-  difficulty: "HIGH",
-  options: ["-3", "3", "-5", "5"],
-  correctAnswer: "-3",
-  topic: "quadratic",
-  explanation: "Titik minimum berada pada x = 2. Substitusi x = 2 menghasilkan f(2) = -3.",
-},
+    id: "55555555-5555-4555-8555-555555555555",
+    question: "Tentukan akar-akar dari x² - 5x + 6 = 0",
+    difficulty: "HIGH",
+    options: ["2 dan 3", "1 dan 6", "-2 dan -3", "3 dan 4"],
+    correctAnswer: "2 dan 3",
+    topic: "quadratic",
+    explanation: "x² - 5x + 6 = (x - 2)(x - 3), sehingga akar-akarnya adalah 2 dan 3.",
+  },
+  {
+    id: "66666666-6666-4666-8666-666666666666",
+    question: "Jika f(x) = 2x² - 8x + 5, tentukan nilai minimum fungsi.",
+    difficulty: "HIGH",
+    options: ["-3", "3", "-5", "5"],
+    correctAnswer: "-3",
+    topic: "quadratic",
+    explanation: "Titik minimum berada pada x = 2. Substitusi x = 2 menghasilkan f(2) = -3.",
+  },
 ];
 
-export async function analyzeFormulaApi(
-  input: FormulaInput
-): Promise<AnalysisResponse> {
+export async function analyzeFormulaApi(input: FormulaInput): Promise<AnalysisResponse> {
   await new Promise((resolve) => setTimeout(resolve, 900));
 
   if (input.formula.toLowerCase().includes("error")) {
@@ -93,11 +82,7 @@ export async function analyzeFormulaApi(
   }
 
   const difficulty: "LOW" | "MEDIUM" | "HIGH" =
-    input.topic === "trigonometry"
-      ? "HIGH"
-      : input.topic === "quadratic"
-      ? "MEDIUM"
-      : "LOW";
+    input.topic === "trigonometry" ? "HIGH" : input.topic === "quadratic" ? "MEDIUM" : "LOW";
 
   const rawResponse = {
     formulaId: crypto.randomUUID(),
@@ -123,7 +108,7 @@ export async function analyzeFormulaApi(
 }
 
 export async function fetchExercisesApi(
-  difficulty?: "LOW" | "MEDIUM" | "HIGH"
+  difficulty?: "LOW" | "MEDIUM" | "HIGH",
 ): Promise<Exercise[]> {
   await new Promise((resolve) => setTimeout(resolve, 400));
 
@@ -134,10 +119,7 @@ export async function fetchExercisesApi(
   return filtered.map((item) => ExerciseSchema.parse(item));
 }
 
-export async function submitAnswerApi(
-  exerciseId: string,
-  answer: string
-): Promise<AnswerResult> {
+export async function submitAnswerApi(exerciseId: string, answer: string): Promise<AnswerResult> {
   await new Promise((resolve) => setTimeout(resolve, 350));
 
   const exercise = exerciseDatabase.find((e) => e.id === exerciseId);
@@ -162,9 +144,7 @@ export async function submitAnswerApi(
 
   const feedback = isCorrect
     ? `Benar! ${exercise.explanation ?? ""}`
-    : `Salah. Jawaban yang benar: ${exercise.correctAnswer}. ${
-        exercise.explanation ?? ""
-      }`;
+    : `Salah. Jawaban yang benar: ${exercise.correctAnswer}. ${exercise.explanation ?? ""}`;
 
   return AnswerResultSchema.parse({
     isCorrect,
@@ -205,9 +185,7 @@ export async function fetchProgressApi(): Promise<Progress[]> {
   ]);
 }
 
-export async function loginApi(
-  input: LoginInput
-): Promise<{
+export async function loginApi(input: LoginInput): Promise<{
   token: string;
   user: {
     id: string;
@@ -226,8 +204,7 @@ export async function loginApi(
 
   const emailPrefix = validated.email.split("@")[0] ?? "pengguna";
 
-  const displayName =
-    emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
+  const displayName = emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1);
 
   return {
     token: crypto.randomUUID(),

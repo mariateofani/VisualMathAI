@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { analyzeFormulaApi } from "@/services/api";
-import { FormulaSchema } from "@/schemas/formulaSchema";
+import Badge from "@/components/Badge";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Input from "@/components/Input";
-import Badge from "@/components/Badge";
+import { FormulaSchema } from "@/schemas/formulaSchema";
+import { analyzeFormulaApi } from "@/services/api";
 
 type AIExplainerProps = {
   onBack: () => void;
@@ -12,9 +12,7 @@ type AIExplainerProps = {
 
 export default function AIExplainer({ onBack }: AIExplainerProps) {
   const [formula, setFormula] = useState("");
-  const [topic, setTopic] = useState<"linear" | "quadratic" | "trigonometry">(
-    "linear",
-  );
+  const [topic, setTopic] = useState<"linear" | "quadratic" | "trigonometry">("linear");
 
   const [analysis, setAnalysis] = useState<null | {
     formulaId: string;
@@ -44,8 +42,7 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
       const validation = FormulaSchema.safeParse(input);
 
       if (!validation.success) {
-        const firstError =
-          validation.error.issues[0]?.message || "Input rumus tidak valid.";
+        const firstError = validation.error.issues[0]?.message || "Input rumus tidak valid.";
 
         setError(firstError);
         return;
@@ -79,13 +76,10 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
         </button>
 
         <Card className="mb-6">
-          <h1 className="text-3xl font-bold text-brand-700">
-            AI Math Explainer
-          </h1>
+          <h1 className="text-3xl font-bold text-brand-700">AI Math Explainer</h1>
 
           <p className="text-gray-600 mt-2">
-            Masukkan rumus matematika untuk mendapatkan penjelasan langkah demi
-            langkah.
+            Masukkan rumus matematika untuk mendapatkan penjelasan langkah demi langkah.
           </p>
         </Card>
 
@@ -105,19 +99,12 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
             />
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Topik
-              </label>
+              <label className="block text-sm font-semibold text-gray-700">Topik</label>
 
               <select
                 value={topic}
                 onChange={(event) =>
-                  setTopic(
-                    event.target.value as
-                      | "linear"
-                      | "quadratic"
-                      | "trigonometry",
-                  )
+                  setTopic(event.target.value as "linear" | "quadratic" | "trigonometry")
                 }
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
               >
@@ -147,9 +134,7 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
         {analysis && (
           <Card className="mt-6">
             <div className="flex items-center justify-between gap-4 mb-4">
-              <h2 className="text-xl font-bold text-gray-800">
-                Hasil Analisis
-              </h2>
+              <h2 className="text-xl font-bold text-gray-800">Hasil Analisis</h2>
 
               <Badge
                 variant={
@@ -168,9 +153,7 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
               <div>
                 <p className="text-sm text-gray-500">Rumus</p>
 
-                <p className="text-lg font-semibold text-gray-800">
-                  {analysis.formula}
-                </p>
+                <p className="text-lg font-semibold text-gray-800">{analysis.formula}</p>
               </div>
 
               <div>
@@ -180,9 +163,7 @@ export default function AIExplainer({ onBack }: AIExplainerProps) {
               </div>
 
               <div>
-                <p className="text-sm text-gray-500 mb-2">
-                  Langkah Penyelesaian
-                </p>
+                <p className="text-sm text-gray-500 mb-2">Langkah Penyelesaian</p>
 
                 <ol className="list-decimal list-inside space-y-2 text-gray-700">
                   {analysis.steps.map((step, index) => (

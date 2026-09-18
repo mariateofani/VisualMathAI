@@ -1,12 +1,6 @@
 import { useState } from "react";
-import {
-  analyzeFormulaApi,
-} from "@/services/api";
-
-import type {
-  FormulaInput,
-  AnalysisResponse,
-} from "@/schemas/formulaSchema";
+import type { AnalysisResponse, FormulaInput } from "@/schemas/formulaSchema";
+import { analyzeFormulaApi } from "@/services/api";
 
 export function useFormulaAnalysis() {
   const [state, setState] = useState<{
@@ -31,9 +25,7 @@ export function useFormulaAnalysis() {
       setState({
         status: "error",
         message:
-          error instanceof Error
-            ? error.message
-            : "Terjadi kesalahan saat menganalisis rumus.",
+          error instanceof Error ? error.message : "Terjadi kesalahan saat menganalisis rumus.",
       });
     }
   };

@@ -7,12 +7,7 @@ type ModalProps = {
   onClose: () => void;
 };
 
-export default function Modal({
-  isOpen,
-  title,
-  children,
-  onClose,
-}: ModalProps) {
+export default function Modal({ isOpen, title, children, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -23,13 +18,9 @@ export default function Modal({
       aria-labelledby="modal-title"
     >
       <div className="w-full max-w-md rounded-2xl bg-white shadow-xl">
-
         {/* Header Modal */}
         <div className="flex items-center justify-between border-b p-5">
-          <h2
-            id="modal-title"
-            className="text-xl font-bold text-gray-800"
-          >
+          <h2 id="modal-title" className="text-xl font-bold text-gray-800">
             {title}
           </h2>
 
@@ -44,9 +35,7 @@ export default function Modal({
         </div>
 
         {/* Isi Modal */}
-        <div className="p-5">
-          {children}
-        </div>
+        <div className="p-5">{children}</div>
 
         {/* Footer Modal */}
         <div className="flex justify-end border-t p-5">
@@ -58,7 +47,6 @@ export default function Modal({
             Tutup
           </button>
         </div>
-
       </div>
     </div>
   );
