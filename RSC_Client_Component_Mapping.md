@@ -1,6 +1,25 @@
-# React Server Components & Client Components
+# React Server Components & Client Components Mapping — VisualMath AI
 ## VisualMath AI – Modul 6
+# 1. Konsep Server Components dan Client Components
 
+VisualMath AI menggunakan Next.js App Router.
+
+Secara umum:
+Server Components
+        │
+        ├── Page
+        ├── Layout
+        ├── Loading
+        └── Dynamic Route
+                │
+                ▼
+        Client Components
+                │
+                ├── Form
+                ├── Interactive UI
+                ├── Local State
+                └── Browser Interaction
+                
 ### Server Components
 
 | No | File | Status |
@@ -31,3 +50,10 @@
 Sebagian besar komponen utama VisualMath AI menggunakan
 React Server Components. Client Components diisolasi hanya pada
 bagian yang membutuhkan state, event handler, dan interaksi pengguna.
+
+Dokumen ini memetakan kebutuhan pada SRS/SKPL VisualMath AI terhadap penggunaan **React Server Components (RSC)** dan **Client Components** pada implementasi Next.js App Router.
+
+Mapping hanya mencantumkan kebutuhan dan komponen yang dapat dibuktikan dari source code pada repository. Kebutuhan yang belum memiliki implementasi Front-End diberi status `Planned / Not Proven`.
+
+---
+
