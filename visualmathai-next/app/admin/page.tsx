@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BackButton from "@/app/components/BackButton";
 
 export const metadata: Metadata = {
   title: "Dashboard Admin | VisualMath AI",
