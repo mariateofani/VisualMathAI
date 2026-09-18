@@ -1,6 +1,3 @@
-## `SRS_UI_Component_Mapping.md`
-
-```md
 # SRS UI Component Mapping — VisualMath AI
 
 Dokumen ini memetakan kebutuhan fungsional pada SRS/SKPL VisualMath AI ke halaman dan komponen User Interface Front-End.
