@@ -5,21 +5,35 @@
 VisualMath AI menggunakan Next.js App Router.
 
 Secara umum:
-``text
+
 Server Components
+
         │
+
         ├── Page
+
         ├── Layout
+
         ├── Loading
+
         └── Dynamic Route
+
                 │
+
                 ▼
+
         Client Components
+
                 │
+
                 ├── Form
+
                 ├── Interactive UI
+
                 ├── Local State
+
                 └── Browser Interaction
+                
                 
 ### Server Components
 
