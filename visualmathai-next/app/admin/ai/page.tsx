@@ -31,7 +31,8 @@ const users = [
 
 export default function AdminUsersPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-10">
+    <section className="mx-auto max-w-4xl px-6 py-10">
+      <BackButton />
       <header className="mb-8 flex items-end justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-blue-600">

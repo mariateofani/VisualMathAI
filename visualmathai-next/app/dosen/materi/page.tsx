@@ -1,3 +1,4 @@
+import BackButton from "@/app/components/BackButton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,7 +28,8 @@ const materials = [
 
 export default function DosenMateriPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-10">
+    <section className="mx-auto max-w-4xl px-6 py-10">
+      <BackButton />
       <header className="mb-8">
         <p className="text-sm font-medium text-blue-600">
           Dosen

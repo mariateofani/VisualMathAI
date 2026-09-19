@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import ProgressSummary from "./ProgressSummary";
+import BackButton from "@/app/components/BackButton";
 
 export const metadata: Metadata = {
   title: "Progres Belajar | VisualMath AI",
@@ -27,7 +28,8 @@ function ProgressLoading() {
 
 export default function ProgressPage() {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-10">
+    <section className="mx-auto max-w-3xl px-6 py-10">
+    <BackButton fallback="/admin" />
       <div className="mb-8">
         <p className="text-sm font-medium text-blue-600">
           VisualMath AI

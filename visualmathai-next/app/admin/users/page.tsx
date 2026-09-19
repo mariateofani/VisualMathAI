@@ -1,3 +1,4 @@
+import BackButton from "@/app/components/BackButton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -30,7 +31,8 @@ const users = [
 
 export default function AdminUsersPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-10">
+    <section className="mx-auto max-w-3xl px-6 py-10">
+    <BackButton fallback="/admin" />
       <header className="mb-8 flex items-end justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-blue-600">

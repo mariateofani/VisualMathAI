@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import BackButton from "@/app/components/BackButton";
 
 export const metadata: Metadata = {
   title: "Dashboard Admin | VisualMath AI",
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AdminPage() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-10">
+    <section className="mx-auto max-w-4xl px-6 py-10">
       <header className="mb-8">
         <p className="text-sm font-medium text-blue-600">
           VisualMath AI

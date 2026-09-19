@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BackButton from "@/app/components/BackButton";
 
 type Props = {
   params: Promise<{
@@ -29,7 +30,8 @@ export default async function TopicPage({ params }: Props) {
   const topicName = formatTopic(topic);
 
   return (
-    <section className="mx-auto max-w-5xl px-6 py-10">
+    <section className="mx-auto max-w-3xl px-6 py-10">
+    <BackButton fallback="/admin" />
       <p className="text-sm font-medium text-blue-600">
         VisualMath AI
       </p>

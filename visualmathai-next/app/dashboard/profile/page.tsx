@@ -1,3 +1,4 @@
+import BackButton from "@/app/components/BackButton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +16,8 @@ const profile = {
 
 export default function ProfilePage() {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-10">
+    <section className="mx-auto max-w-3xl px-6 py-10">
+    <BackButton fallback="/admin" />
       <header className="mb-8">
         <p className="text-sm font-medium text-blue-600">
           VisualMath AI
